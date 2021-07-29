@@ -5,23 +5,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-from bs4 import BeautifulSoup as bs
-#id = onetrust-accept-btn-handler
+
+
 
 class OlimpicScraper:
     def __init__(self) -> None:
         self.url = 'https://olympics.com/tokyo-2020/olympic-games/en/results/all-sports/medal-standings.htm'
         self.driver = Chrome()
         self.cookie_btn_id = 'onetrust-accept-btn-handler'
-        self.team = {
-            "rank": 0,
-            "team": 0,
-            "gold": 0,
-            "silver": 0,
-            "bronze": 0,
-            "total": 0,
-            "total_ranking": 0,
-        }
         #self.driver.maximize_window()
 
     def init_session(self):
@@ -42,7 +33,7 @@ class OlimpicScraper:
         
         num_rows = len(self.driver.find_elements_by_xpath("//*[@id='medal-standing-table']/tbody/tr"))
         num_cols = len(self.driver.find_elements_by_xpath("//*[@id='medal-standing-table']/tbody/tr[1]/td"))
-        table =[]
+        table = []
         for row in range(1,(num_rows + 1)):
             team = []
             for col in range(1,(num_cols)):
@@ -53,13 +44,7 @@ class OlimpicScraper:
             table.append(team)
         
         return table
-
-
-wd = OlimpicScraper()
-wd.init_session()
-try: 
-    wd.accept_cookies()
-finally:
-    wd.get_page_source()
+    
+ 
 
 #Código apenas pega apenas o final da tabela
